@@ -8,19 +8,19 @@ namespace EuroDiffusionProblem
 {
     class Country
     {
-        public string name;
+        public string Name;
         private int[,] countryGrid;
         private bool[,] generalCountriesGrid;
         private int xl;
         private int yl;
         private int xh;
         private int yh;
-        public int numberOfDays = 0;
+        public int NumberOfDays = 0;
         private bool isComplete;
 
         public Country(String name, int xl, int yl, int xh, int yh)
         {
-            this.name = name;
+            this.Name = name;
             this.xl = xl - 1;
             this.yl = yl - 1;
             this.xh = xh - 1;
@@ -32,34 +32,25 @@ namespace EuroDiffusionProblem
 
         private bool CheckInputData()
         {
-            try
-            {
-                if (name.Length > Constants.MAX_COUNTRYNAME_LENGTH)
-                    throw new Exception("Name of a country should be less than 25 characters long.");
+            if (Name.Length > Constants.MAX_COUNTRYNAME_LENGTH)
+                throw new Exception("Name of a country should be less than 25 characters long.");
 
-                if (xl < Constants.MIN_CITY_COORDINATE - 1 ||
-                    yl < Constants.MIN_CITY_COORDINATE - 1 ||
-                    xh < Constants.MIN_CITY_COORDINATE - 1 ||
-                    yh < Constants.MIN_CITY_COORDINATE - 1)
-                {
-                    throw new Exception("Coordinates should be greater than 0.");
-                }
-
-                if (xl >= Constants.MAX_CITY_COORDINATE ||
-                    yl >= Constants.MAX_CITY_COORDINATE ||
-                    xh >= Constants.MAX_CITY_COORDINATE ||
-                    yh >= Constants.MAX_CITY_COORDINATE)
-                {
-                    throw new Exception("Coordinates should NOT be greater than 10.");
-                }
-            }
-            catch (Exception e)
+            if (xl < Constants.MIN_CITY_COORDINATE - 1 ||
+                yl < Constants.MIN_CITY_COORDINATE - 1 ||
+                xh < Constants.MIN_CITY_COORDINATE - 1 ||
+                yh < Constants.MIN_CITY_COORDINATE - 1)
             {
-                Console.WriteLine(e.Message);
+                throw new Exception("Coordinates should be greater than 0.");
             }
 
+            if (xl >= Constants.MAX_CITY_COORDINATE ||
+                yl >= Constants.MAX_CITY_COORDINATE ||
+                xh >= Constants.MAX_CITY_COORDINATE ||
+                yh >= Constants.MAX_CITY_COORDINATE)
+            {
+                throw new Exception("Coordinates should NOT be greater than 10.");
+            }
             
-
             return true;
         }
 
@@ -76,7 +67,7 @@ namespace EuroDiffusionProblem
                 }
             }
             if (!IsComplete())
-                numberOfDays++;
+                NumberOfDays++;
             countryGrid = result;
         }
 
@@ -127,11 +118,11 @@ namespace EuroDiffusionProblem
             if (c is Country)
             {
                 Country country = (Country)c;
-                if (numberOfDays > country.numberOfDays)
+                if (NumberOfDays > country.NumberOfDays)
                     return 1;
-                if (numberOfDays < country.numberOfDays)
+                if (NumberOfDays < country.NumberOfDays)
                     return -1;
-                return (name.CompareTo(country.name));
+                return (Name.CompareTo(country.Name));
             }
             else
                 return -1;
@@ -144,7 +135,7 @@ namespace EuroDiffusionProblem
 
         public String GetName()
         {
-            return name;
+            return Name;
         }
 
         public int GetXl()
@@ -169,7 +160,7 @@ namespace EuroDiffusionProblem
 
         public int GetNumberOfDays()
         {
-            return numberOfDays;
+            return NumberOfDays;
         }
 
         public bool IsComplete()
@@ -189,9 +180,9 @@ namespace EuroDiffusionProblem
 
         public Boolean IsUnique(Country[] countries)
         {
-            for (int i = 0; i < countries.Length; i++)
+            for (int i = 0; countries[i] != null; i++)
             {
-                if (countries[i].GetName().CompareTo(this.name) == 0)
+                if (countries[i].GetName().CompareTo(this.Name) == 0)
                     return false;
             }
             return true;

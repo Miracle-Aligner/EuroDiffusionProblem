@@ -22,23 +22,41 @@ namespace EuroDiffusionProblem
                 Console.WriteLine("Choose an option:");
                 option = Convert.ToInt32(Console.ReadLine());
 
-                List<CoinsDiffusionUtils> Simulations;
+                List<CoinsDiffusionUtils> simulations = null;
 
                 if (option == 3)
                     return;
                 else if (option == 2)
-                    Simulations = InputProcessor.GetManualInput();
-                else
-                    Simulations = InputProcessor.ReadFromFile("input.txt");
-
-                if (Simulations != null)
                 {
-                    foreach (CoinsDiffusionUtils MemberStateSimulation in Simulations)
+                    try
+                    {
+                        simulations = InputProcessor.GetManualInput();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                }
+                    
+                else
+                    try
+                    {
+                        simulations = InputProcessor.ReadFromFile("input.txt");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                
+
+                if (simulations != null)
+                {
+                    foreach (CoinsDiffusionUtils MemberStateSimulation in simulations)
                         MemberStateSimulation.SimulateDiffusion();
 
                     Console.WriteLine("");
                     Console.WriteLine("RESULT:");
-                    Console.WriteLine(BuildResult(Simulations));
+                    Console.WriteLine(BuildResult(simulations));
                 }
                 
                 Console.WriteLine("");
@@ -57,11 +75,7 @@ namespace EuroDiffusionProblem
                 i++;
                 if (simulation.getNumberOfCountries() == 0)
                     continue;
-                stringBuilder.Append("Case number")
-                        .Append(" ")
-                        .Append(i)
-                        .Append("\n")
-                        .Append(simulation.GetResults());
+                stringBuilder.Append($"Case number {i} \n{simulation.GetResults()}");
             }
 
             return stringBuilder.ToString();

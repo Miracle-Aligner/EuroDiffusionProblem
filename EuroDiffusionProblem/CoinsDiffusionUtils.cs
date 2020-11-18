@@ -23,16 +23,8 @@ namespace EuroDiffusionProblem
 
         private void CheckInputData()
         {
-            try
-            {
-                if (countriesQuantity > Constants.MAX_NUM_OF_COUNTRIES)
-                    throw new ArgumentOutOfRangeException("Countries quantity should be greater than 0.");
-            }
-            
-            catch (ArgumentOutOfRangeException e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            if (countriesQuantity > Constants.MAX_NUM_OF_COUNTRIES)
+                throw new Exception("Countries quantity should be less than 12.");
         }
         
         private void FillGeneralCountriesGrid()
@@ -54,25 +46,17 @@ namespace EuroDiffusionProblem
 
         public void SimulateDiffusion()
         {
-            try
+            int day = 0;
+            while (!IsEnd())
             {
-                int day = 0;
-                while (!IsEnd())
+                day++;
+                for (int i = 0; i < countriesQuantity; i++)
                 {
-                    day++;
-                    for (int i = 0; i < countriesQuantity; i++)
-                    {
-                        countries[i].NextDay();
-                    }
-                    if (day > Constants.MAX_NUM_OF_DAYS)
-                        throw new ArgumentException("Countries should be connected.");
+                    countries[i].NextDay();
                 }
-            }
-            catch (ArgumentOutOfRangeException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            
+                if (day > Constants.MAX_NUM_OF_DAYS)
+                    throw new ArgumentException("Countries should be connected.");
+            }            
         }
 
         private bool IsEnd()
@@ -105,14 +89,11 @@ namespace EuroDiffusionProblem
 
         public String GetResults()
         {
-            var sortedCountries = countries.OrderBy(c => c.name).OrderBy(c => c.numberOfDays).ToList();
+            var sortedCountries = countries.OrderBy(c => c.Name).OrderBy(c => c.NumberOfDays).ToList();
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < countriesQuantity; i++)
             {
-                stringBuilder.Append(sortedCountries[i].GetName())
-                        .Append(" ")
-                        .Append(sortedCountries[i].GetNumberOfDays())
-                        .Append("\n");
+                stringBuilder.Append($"{sortedCountries[i].GetName()} {sortedCountries[i].GetNumberOfDays()}\n");
             }
             return stringBuilder.ToString();
         }
