@@ -25,7 +25,7 @@ namespace EuroDiffusionProblem
                 Country[] countries = new Country[countriesQuantity];
                 for (int i = 0; i < countriesQuantity; i++)
                 {
-                    string[] splitLine = sr.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    string[] splitLine = sr.ReadLine().Split(' ');
                     Country newCountry = new Country(
                                                         splitLine[0],
                                                         Convert.ToInt32(splitLine[1]),
@@ -66,7 +66,7 @@ namespace EuroDiffusionProblem
                     for (int i = 0; i < countriesQuantity; i++)
                     {
                         Console.WriteLine("Enter country info (name, xl, yl, xh, yh):");
-                        string[] splitLine = Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                        string[] splitLine = Console.ReadLine().Split(' ');
                         Country newCountry = new Country(
                                                     splitLine[0],
                                                     Convert.ToInt32(splitLine[1]),
@@ -76,7 +76,6 @@ namespace EuroDiffusionProblem
                         if (newCountry.IsUnique(countries))
                         {
                             countries[i] = newCountry;
-                            Console.WriteLine("Ima here");
                         }
                         else
                         {
