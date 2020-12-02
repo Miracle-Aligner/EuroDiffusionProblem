@@ -12,7 +12,7 @@ namespace EuroDiffusionProblem
         static void Main(string[] args)
         {
             int option = 3;
-            while(true)
+            while (true)
             {
                 Console.WriteLine("MENU:");
                 Console.WriteLine("1. Read from test file.");
@@ -24,30 +24,25 @@ namespace EuroDiffusionProblem
 
                 List<CoinsDiffusionUtils> simulations = null;
 
-                if (option == 3)
-                    return;
-                else if (option == 2)
+                try
                 {
-                    try
+                    switch (option)
                     {
-                        simulations = InputProcessor.GetManualInput();
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e.Message);
+                        case 3:
+                            return;
+                        case 2:
+                            simulations = InputProcessor.GetManualInput();
+                            break;
+                        default:
+                            simulations = InputProcessor.ReadFromFile("input.txt");
+                            break;
                     }
                 }
-                    
-                else
-                    try
-                    {
-                        simulations = InputProcessor.ReadFromFile("input.txt");
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e.Message);
-                    }
-                
+
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
 
                 if (simulations != null)
                 {

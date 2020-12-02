@@ -73,9 +73,11 @@ namespace EuroDiffusionProblem
 
         private int TransportToNeighbors(int[,] resultGrid, int x, int y, int amountToTransport)
         {
-            int transportedInGeneral = 0;
+            
             if (amountToTransport <= 0)
-                return transportedInGeneral;
+                return 0;
+
+            int transportedInGeneral = 0;
             if (UpdateNeighborCoins(resultGrid, x - 1, y, amountToTransport))
                 transportedInGeneral++;
             if (UpdateNeighborCoins(resultGrid, x, y - 1, amountToTransport))
@@ -108,9 +110,8 @@ namespace EuroDiffusionProblem
 
         private bool CheckIsCityAvailable(int x, int y)
         {
-            if (x < 0 || y < 0 || x >= Constants.MAX_CITY_COORDINATE || y >= Constants.MAX_CITY_COORDINATE)
-                return false;
-            return generalCountriesGrid[x, y];
+            return (x < 0 || y < 0 || x >= Constants.MAX_CITY_COORDINATE || y >= Constants.MAX_CITY_COORDINATE) ? 
+                false : generalCountriesGrid[x, y];
         }
 
         public int CompareTo(Object c)
